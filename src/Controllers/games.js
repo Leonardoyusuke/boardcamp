@@ -2,7 +2,7 @@ import { db } from "../Config/dataBase.js"
 export async function gamesGet(req, res){
     try {
         const games = await db.query("SELECT * FROM games")
-        res.send(games)
+        res.send(games.rows)
     } catch (error) {
         res.status(500).send(error.message);
     }
