@@ -22,7 +22,7 @@ export async function gamesPost(req, res){
         if(validation.rowCount > 0){
             return res.sendStatus(409)
         }
-        await db.query(`INSERT INTO games (name, image ,"stockTotal" ,"pricePerDay")
+        await db.query(`UPDATE INTO games (name, image ,"stockTotal" ,"pricePerDay")
          VALUES ($1,$2,$3,$4)`,[name,image,stockTotal,pricePerDay])
         res.sendStatus(201)
     } catch (error) {
