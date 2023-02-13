@@ -25,7 +25,7 @@ export async function rentalsPost (req, res){
         if(validationDaysRented.rowCount < 1 ){
             return res.sendStatus(400)
         }
-        if(validationCustomer.rowCount < 1 || daysRented >= 0){
+        if(validationCustomer.rowCount < 1 || daysRented <= 0){
             return res.sendStatus(400)
         }
         await db.query(`INSERT INTO rentals (
@@ -34,16 +34,15 @@ export async function rentalsPost (req, res){
             "rentDate",
             "daysRented",
             "returnDate",
-            "rentDate",
             "originalPrice",
-            "daleyFee",
+            "delayFee",
             customer,
             game
             ) 
             Values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
             [customerId,gameId,rentDate,daysRented,returnDate,originalPrice,delayFee,customerId,gameId]
             )
-            res.send(201)
+            res.sendStatus(201)
         
             
 
