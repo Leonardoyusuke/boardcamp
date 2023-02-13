@@ -48,10 +48,10 @@ export async function customersPut(req, res){
     const {name,phone,cpf,birthday} = req.body
 
     try {
-    //    const cpfValidation = await db.query(`SELECT * FROM customers WHERE cpf = $1`,[cpf])
-    //    if(cpfValidation.rowCount > 0){
-    //      return res.sendStatus(409)
-    //   }
+        const cpfValidation = await db.query(`SELECT id FROM customers WHERE cpf and id = $1`,[cpf,id])
+        if(cpfValidation.rowCount > 0){
+          return res.sendStatus(409)
+   }
         await db.query(`UPDATE customers set 
         name = $1,
         phone = $2, 
