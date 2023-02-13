@@ -32,11 +32,9 @@ export async function rentalsPost (req, res){
         if(validationDaysRented.rowCount < 1 ){
             return res.sendStatus(400)
         }
-        if(validationCustomer.rowCount < 1  || gameId < 0 || daysRented <= 0){
+        if(validationCustomer.rowCount < 1  || daysRented <= 0){
             return res.sendStatus(400)
         }
-
-
 
         await db.query(`INSERT INTO rentals (
             "customerId",
@@ -60,6 +58,16 @@ export async function rentalsPost (req, res){
     }
 }
 export async function rentalsEndPost (req, res){
+const id = req.params.id
+const returnDate = dayjs().format("YYYY-MM-DD")
+
+
+try {
+    const dayRented = await db.query(`SELECT "daysRented" FROM rentals where id = $1`,[id])
+} catch (error) {
+    
+}
+
 
 }
 export async function rentalsDelete (req, res){
