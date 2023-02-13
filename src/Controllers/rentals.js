@@ -15,10 +15,11 @@ export async function rentalsPost (req, res){
     const rentDate = dayjs().format("YYYY-MM-DD")
     const returnDate = null
     const delayFee = null
+    console.log(daysRented)
 
     try {
         const pricePerDay = await db.query(`SELECT "pricePerDay" FROM games WHERE id = $1`,[gameId])
-        const originalPrice = pricePerDay * daysRented 
+        const originalPrice = pricePerDay.rows[0].pricePerDay * daysRented 
         const validationCustomer = await db.query(`SELECT * From customers WHERE id = $1`,[customerId])
         const validationDaysRented = await db.query(`SELECT "stockTotal" From games WHERE id = $1`,[gameId])
     
@@ -35,12 +36,10 @@ export async function rentalsPost (req, res){
             "daysRented",
             "returnDate",
             "originalPrice",
-            "delayFee",
-            customer,
-            game
+            "delayFee"
             ) 
-            Values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
-            [customerId,gameId,rentDate,daysRented,returnDate,originalPrice,delayFee,customerId,gameId]
+            Values($1,$2,$3,$4,$5,$6,$7)`,
+            [customerId,gameId,rentDate,daysRented,returnDate,originalPrice,delayFee]
             )
             res.sendStatus(201)
         
