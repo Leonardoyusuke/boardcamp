@@ -32,7 +32,7 @@ export async function rentalsPost (req, res){
         if(validationDaysRented.rowCount < 1 ){
             return res.sendStatus(400)
         }
-        if(validationCustomer.rowCount < 1  || gameId > 0 || daysRented <= 0){
+        if(validationCustomer.rowCount < 1  || gameId < 0 || daysRented <= 0){
             return res.sendStatus(400)
         }
 
@@ -60,7 +60,7 @@ export async function rentalsPost (req, res){
     }
 }
 export async function rentalsEndPost (req, res){
-    
+
 }
 export async function rentalsDelete (req, res){
     
