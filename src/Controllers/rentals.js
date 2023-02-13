@@ -22,11 +22,11 @@ export async function rentalsPost (req, res){
         const originalPrice = pricePerDay.rows[0].pricePerDay * daysRented 
         const validationCustomer = await db.query(`SELECT * From customers WHERE id = $1`,[customerId])
         const validationDaysRented = await db.query(`SELECT "stockTotal" From games WHERE id = $1`,[gameId])
-    
+        console.log(validationCustomer.rowCount,"validacao")
         if(validationDaysRented.rowCount < 1 ){
             return res.sendStatus(400)
         }
-        if(validationCustomer.rowCount < 1 || daysRented <= 0){
+        if(validationCustomer.rowCount < 1  || daysRented <= 0){
             return res.sendStatus(400)
         }
         await db.query(`INSERT INTO rentals (
